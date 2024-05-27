@@ -12,6 +12,6 @@ jobs:
         uses: actions/checkout@v4
       - name: Say Hello Step
         id: say_hello
-        uses: deferdie/acumen-github-action/.github/actions/Sythetic@master
+        uses: deferdie/acumen-github-action/.github/actions/Synthetic@master
         with:
           SYNTHETIC_TEST_URL: "https://google.com"
