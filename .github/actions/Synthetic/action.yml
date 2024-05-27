@@ -1,0 +1,12 @@
+name: 'Start a new synthetic test'
+description: 'Starts a new synthetic test by providing a test URL'
+inputs:
+  SYNTHETIC_TEST_URL:
+    description: 'The endpoint of the test url'
+    required: true
+outputs:
+  synthetic: 
+    description: 'The created application version'
+runs:
+  using: 'node20'
+  main: '../../../dist/Synthetic/index.js'
