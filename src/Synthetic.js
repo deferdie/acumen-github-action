@@ -11,7 +11,7 @@ export default class Synthetic {
     }
 
     getBatch(syntheticToken, batchId) {
-        return fetch(`${this.API_ENDPOINT}/status/watcher/${syntheticToken}/${batchId}`, {
+        return fetch(`https://app.acumenlogs.com/status/watcher/${syntheticToken}/${batchId}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',

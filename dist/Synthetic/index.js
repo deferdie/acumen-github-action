@@ -24937,7 +24937,7 @@ class Synthetic {
     }
 
     getBatch(syntheticToken, batchId) {
-        return fetch(`${this.API_ENDPOINT}/status/watcher/${syntheticToken}/${batchId}`, {
+        return fetch(`https://app.acumenlogs.com/status/watcher/${syntheticToken}/${batchId}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -26885,7 +26885,7 @@ async function run() {
   await new Promise((resolve, reject) => {
     setInterval(async () => {
       const result = await (await syn.getBatch(test.batch.token, test.batch.id)).json();
-      console.log(result.status, result.has_passed, retries);
+      console.log(result.status, result.has_passed, retries, test.batch.token, test.batch.id);
       
       if (result.status === 'completed' && (result.has_passed == true || result.has_passed == 1)) {
         return resolve(result)
