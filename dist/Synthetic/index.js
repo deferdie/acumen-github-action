@@ -26888,6 +26888,7 @@ async function run() {
       console.log(result.status, (result.has_passed == true || result.has_passed == 1));
       
       if (result.status === 'completed' && (result.has_passed == true || result.has_passed == 1)) {
+        console.log('resolved');
         return resolve(result)
       }
       
