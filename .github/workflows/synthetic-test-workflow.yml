@@ -6,12 +6,13 @@ on:
 jobs:
   Synthetic:
     runs-on: ubuntu-latest
-    name: A job to say hello
+    name: Checkout
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Say Hello Step
-        id: say_hello
+
+      - name: Test synthetic action
+        id: synthetic_test_step
         uses: deferdie/acumen-github-action/.github/actions/Synthetic@master
         with:
-          SYNTHETIC_TEST_URL: "https://google.com"
+          SYNTHETIC_TEST_URL: "https://app.acumenlogs.com/run/watcher/1b5b8642-3d45-4022-9f9b-9a22b3930502"
