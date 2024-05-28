@@ -1,5 +1,5 @@
 export default class Synthetic {
-    API_ENDPOINT = 'https://app.acumenlogs.com/'
+    API_ENDPOINT = 'https://app.acumenlogs.com'
 
     startSynthetic(url) {
         return fetch(url, {

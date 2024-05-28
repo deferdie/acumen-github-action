@@ -24925,7 +24925,7 @@ __nccwpck_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ Synthetic)
 /* harmony export */ });
 class Synthetic {
-    API_ENDPOINT = 'https://app.acumenlogs.com/'
+    API_ENDPOINT = 'https://app.acumenlogs.com'
 
     startSynthetic(url) {
         return fetch(url, {
