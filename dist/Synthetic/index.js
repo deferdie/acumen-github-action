@@ -24932,7 +24932,7 @@ class Synthetic {
     }
 
     getBatch(syntheticToken, batchId) {
-        return fetch(`${API_ENDPOINT}/status/watcher/${syntheticToken}/${batchId}`);
+        return fetch(`${this.API_ENDPOINT}/status/watcher/${syntheticToken}/${batchId}`);
     }
 }
 
