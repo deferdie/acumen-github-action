@@ -25,5 +25,29 @@ jobs:
           test_url: 'https://app.acumenlogs.com/run/watcher/<Your test url>'
 ```
 
+### Output
+ #### synthetic
+ This output will contain the results of the test with the below JSON response.
+ ```
+    {
+        "id": TEST RUN ID,
+        "status": "completed",
+        "token": "TEST_TOKEN",
+        "running": 0,
+        "has_passed": 1,
+        "response_count": 14,
+        "console_log_count": 3,
+        "two_hundred_responses": 13,
+        "three_hundred_responses": 0,
+        "four_hundred_responses": 1,
+        "responses": [
+            {
+                "url": "https://example.com",
+                "status": 404
+            }
+        ]
+    }
+ ```
+
 ## Support
 For any questions or queries please email <a href="mailto:support@acumenlogs.com">support@acumenlogs.com</a>. 
