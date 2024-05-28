@@ -24925,8 +24925,14 @@ __nccwpck_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ Synthetic)
 /* harmony export */ });
 class Synthetic {
+    API_ENDPOINT = 'https://app.acumenlogs.com/'
+
     startSynthetic(url) {
-        console.log(url)
+        return fetch(url);
+    }
+
+    getBatch(syntheticToken, batchId) {
+        return fetch(`${API_ENDPOINT}/status/watcher/${syntheticToken}/${batchId}`);
     }
 }
 
@@ -26859,7 +26865,30 @@ const {
 async function run() {
   const syn = new Synthetic();
 
-  syn.startSynthetic(core.getInput('SYNTHETIC_TEST_URL'));
+  const test = await (await syn.startSynthetic(core.getInput('SYNTHETIC_TEST_URL'))).json();
+
+  console.log(test.batch.id);
+
+  const  MAX_RETRIES = 210;
+  let retries = 0;
+
+  await new Promise((resolve, reject) => {
+    setInterval(async () => {
+      const result = await (await syn.getBatch(test.batch.token, test.batch.id)).json();
+      if (result.status === 'completed') {
+        return resolve(result)
+      }
+      
+      if (result.status === 'completed' && (result.has_passed == false || result.has_passed == 0)) {
+        return reject("Failed synthetic test")
+      }
+      
+      retries = retries +1;
+      if (retries >= MAX_RETRIES) {
+        return reject("Synthetic action timeout")
+      }
+    }, 4000);
+  });
 }
 
 run().catch((error) => {
