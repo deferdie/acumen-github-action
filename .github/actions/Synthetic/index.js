@@ -17,7 +17,7 @@ async function run() {
   await new Promise((resolve, reject) => {
     setInterval(async () => {
       const result = await (await syn.getBatch(test.batch.token, test.batch.id)).json();
-      if (result.status === 'completed') {
+      if (result.status === 'completed' && (result.has_passed == true || result.has_passed == 1)) {
         return resolve(result)
       }
       
