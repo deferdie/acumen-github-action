@@ -24925,7 +24925,9 @@ __nccwpck_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ Synthetic)
 /* harmony export */ });
 class Synthetic {
-
+    startSynthetic(url) {
+        console.log(url)
+    }
 }
 
 /***/ }),
@@ -26855,7 +26857,9 @@ const {
 } = __nccwpck_require__(4455);
 
 async function run() {
+  const syn = new Synthetic();
 
+  syn.startSynthetic(core.getInput('SYNTHETIC_TEST_URL'));
 }
 
 run().catch((error) => {
