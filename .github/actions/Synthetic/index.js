@@ -4,7 +4,6 @@ const { default: Synthetic } = require("../../../src/Synthetic");
 async function run() {
   const syn = new Synthetic();
   const test = await (await syn.startSynthetic(core.getInput('SYNTHETIC_TEST_URL'))).json();
-  console.log(test.batch.id);
 
   const MAX_RETRIES = 210;
   let retries = 0;
@@ -13,10 +12,8 @@ async function run() {
     const interval = setInterval(async () => {
       try {
         const result = await (await syn.getBatch(test.watch.token, test.batch.id)).json();
-        console.log(result.status, (result.has_passed == true || result.has_passed == 1));
 
         if (result.status === 'completed' && (result.has_passed == true || result.has_passed == 1)) {
-          console.log('resolved');
           clearInterval(interval);  // Clear the interval on resolve
           return resolve(result);
         }
