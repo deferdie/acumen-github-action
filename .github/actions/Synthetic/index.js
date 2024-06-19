@@ -3,7 +3,10 @@ const { default: Synthetic } = require("../../../src/Synthetic");
 
 async function run() {
   const syn = new Synthetic();
-  const test = await (await syn.startSynthetic(core.getInput('SYNTHETIC_TEST_URL'))).json();
+  const test = await (await syn.startSynthetic(
+    core.getInput('SYNTHETIC_TEST_URL'),
+    core.getInput('START_URL')
+  )).json();
 
   const MAX_RETRIES = 210;
   let retries = 0;

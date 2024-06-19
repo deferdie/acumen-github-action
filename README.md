@@ -1,1 +1,2 @@
-# acumen-github-action
+# Acumen Logs GitHub Action
+

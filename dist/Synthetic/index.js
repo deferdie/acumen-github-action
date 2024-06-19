@@ -24927,7 +24927,11 @@ __nccwpck_require__.r(__webpack_exports__);
 class Synthetic {
     API_ENDPOINT = 'https://app.acumenlogs.com'
 
-    startSynthetic(url) {
+    startSynthetic(url, startUrl = null) {
+        if (startUrl) {
+            url = url + '?start_url=' + startUrl;
+        }
+
         return fetch(url, {
             method: 'GET',
             headers: {
@@ -26871,7 +26875,10 @@ const { default: Synthetic } = __nccwpck_require__(6038);
 
 async function run() {
   const syn = new Synthetic();
-  const test = await (await syn.startSynthetic(core.getInput('SYNTHETIC_TEST_URL'))).json();
+  const test = await (await syn.startSynthetic(
+    core.getInput('SYNTHETIC_TEST_URL'),
+    core.getInput('START_URL')
+  )).json();
 
   const MAX_RETRIES = 210;
   let retries = 0;

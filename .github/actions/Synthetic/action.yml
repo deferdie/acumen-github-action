@@ -4,9 +4,12 @@ inputs:
   SYNTHETIC_TEST_URL:
     description: 'The endpoint of the test url'
     required: true
+  START_URL:
+    description: 'Use this URL to override the default start URL'
+    required: false
 outputs:
   synthetic: 
-    description: 'The created application version'
+    description: 'The result of the synthetic test'
 runs:
   using: 'node20'
   main: '../../../dist/Synthetic/index.js'
