@@ -22,7 +22,9 @@ jobs:
       - name: Run synthetic test
         uses: deferdie/acumen-github-action/.github/actions/Synthetic@v1
         with:
-          test_url: 'https://app.acumenlogs.com/run/watcher/<Your test url>'
+          SYNTHETIC_TEST_URL: 'https://app.acumenlogs.com/run/watcher/<Your test url>'
+          START_URL: (Optional) 'https://example.com'
+
 ```
 
 ### Output
