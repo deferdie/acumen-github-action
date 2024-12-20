@@ -26898,6 +26898,11 @@ async function run() {
           return reject("Failed synthetic test");
         }
 
+        if (result.status === 'failed' && (result.has_passed == false || result.has_passed == 0)) {
+          clearInterval(interval);  // Clear the interval on reject
+          return reject("Failed synthetic test");
+        }
+
         retries += 1;
         if (retries >= MAX_RETRIES) {
           clearInterval(interval);  // Clear the interval on timeout
