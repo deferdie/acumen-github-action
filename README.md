@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Run synthetic test
-        uses: deferdie/acumen-github-action/.github/actions/Synthetic@v1
+        uses: deferdie/acumen-github-action/.github/actions/Synthetic@v2
         with:
           SYNTHETIC_TEST_URL: 'https://app.acumenlogs.com/run/watcher/<Your test url>'
           START_URL: (Optional) 'https://example.com'
