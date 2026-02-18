@@ -26882,36 +26882,63 @@ async function run() {
 
   const MAX_RETRIES = 210;
   let retries = 0;
+  let interval = null;
+  let isResolved = false;
 
   await new Promise((resolve, reject) => {
-    const interval = setInterval(async () => {
+    const checkStatus = async () => {
+      // Prevent multiple resolve/reject calls
+      if (isResolved) {
+        return;
+      }
+
       try {
         const result = await (await syn.getBatch(test.watch.token, test.batch.id)).json();
 
-        if (result.status === 'completed' && (result.has_passed == true || result.has_passed == 1)) {
-          clearInterval(interval);  // Clear the interval on resolve
-          return resolve(result);
+        // Handle completed status
+        if (result.status === 'completed') {
+          if (result.has_passed == true || result.has_passed == 1) {
+            isResolved = true;
+            if (interval) clearInterval(interval);
+            return resolve(result);
+          } else if (result.has_passed == false || result.has_passed == 0) {
+            isResolved = true;
+            if (interval) clearInterval(interval);
+            return reject(new Error("Failed synthetic test"));
+          } else {
+            // has_passed is null/undefined or unexpected value - treat as failure
+            isResolved = true;
+            if (interval) clearInterval(interval);
+            return reject(new Error(`Synthetic test completed with unexpected has_passed value: ${result.has_passed}`));
+          }
         }
 
-        if (result.status === 'completed' && (result.has_passed == false || result.has_passed == 0)) {
-          clearInterval(interval);  // Clear the interval on reject
-          return reject("Failed synthetic test");
+        // Handle failed status (regardless of has_passed value)
+        if (result.status === 'failed') {
+          isResolved = true;
+          if (interval) clearInterval(interval);
+          return reject(new Error("Failed synthetic test"));
         }
 
-        if (result.status === 'failed' && (result.has_passed == false || result.has_passed == 0)) {
-          clearInterval(interval);  // Clear the interval on reject
-          return reject("Failed synthetic test");
-        }
-
+        // Handle other statuses (running, pending, etc.) - continue polling
         retries += 1;
         if (retries >= MAX_RETRIES) {
-          clearInterval(interval);  // Clear the interval on timeout
-          return reject("Synthetic action timeout");
+          isResolved = true;
+          if (interval) clearInterval(interval);
+          return reject(new Error("Synthetic action timeout"));
         }
       } catch (error) {
-        clearInterval(interval);  // Clear the interval on error
+        isResolved = true;
+        if (interval) clearInterval(interval);
         return reject(error);
       }
+    };
+
+    // Check immediately, then set up interval
+    checkStatus().catch(reject);
+    
+    interval = setInterval(() => {
+      checkStatus().catch(reject);
     }, 4000);
   });
 }
