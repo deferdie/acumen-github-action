@@ -16,6 +16,8 @@ async function run() {
       try {
         const result = await (await syn.getBatch(test.watch.token, test.batch.id)).json();
 
+        console.log(result);
+
         if (result.status === 'completed' && (result.has_passed == true || result.has_passed == 1)) {
           clearInterval(interval);  // Clear the interval on resolve
           return resolve(result);
